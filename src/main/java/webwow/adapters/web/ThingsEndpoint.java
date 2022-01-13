@@ -1,6 +1,7 @@
 package webwow.adapters.web;
 
 import com.google.gson.Gson;
+import com.vtence.molecule.Middleware;
 import com.vtence.molecule.Request;
 import com.vtence.molecule.Response;
 import com.vtence.molecule.WebServer;
@@ -32,6 +33,7 @@ public class ThingsEndpoint {
 
     ThingsEndpoint(WebServer server) {
         this.webServer = server;
+        addAllowCrossOriginMiddleware();
 
         try {
             run();
@@ -41,7 +43,16 @@ public class ThingsEndpoint {
         }
     }
 
-    public String getUri() {
+    private void addAllowCrossOriginMiddleware() {
+        Middleware allowCrossOrigin = next -> request ->
+            next.handle(request).whenSuccessful(
+                resp -> resp.addHeader("Access-Control-Allow-Origin", "*")
+            );
+
+        webServer.add(allowCrossOrigin);
+	}
+
+	public String getUri() {
         return webServer.uri() + "/things";
     }
 
