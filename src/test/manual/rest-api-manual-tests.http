@@ -1,0 +1,19 @@
+GET http://0.0.0.0:8080/things
+Accept: */*
+Cache-Control: no-cache
+
+###
+POST http://0.0.0.0:8080/things
+Content-Type: application/json
+
+{"name":"some name", "number":5678}
+
+###
+DELETE http://0.0.0.0:8080/things/1299
+
+
+###
+GET http://0.0.0.0:8080/things/99
+
+
+###
