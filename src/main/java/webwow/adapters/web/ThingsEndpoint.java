@@ -27,7 +27,7 @@ public class ThingsEndpoint {
     private WebServer webServer;
 
     public ThingsEndpoint() {
-        this(WebServer.create());
+        this(WebServer.create("127.0.0.1", 8080));
     }
 
     ThingsEndpoint(WebServer server) {
