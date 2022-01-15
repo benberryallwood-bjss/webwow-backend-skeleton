@@ -62,10 +62,19 @@ public class ThingsEndpoint {
 
             get("/things/:id").to(request -> fetchThingById(request));
 
+            options("/things").to(request -> optionsResponseAllowRequest(request, "POST"));
             post("/things").to(request -> addThing(request));
 
+            options("/things/:id").to(request -> optionsResponseAllowRequest(request, "DELETE"));
             delete("/things/:id").to(request -> deleteThing(request));
         }}));
+    }
+
+    private Response optionsResponseAllowRequest(Request request, String requestToAllow) {
+        return Response.ok()
+            .addHeader("Access-Control-Allow-Methods", requestToAllow)
+            .addHeader("Access-Control-Allow-Headers", "content-type")
+            .done();
     }
 
     private Response deleteThing(Request request) {
